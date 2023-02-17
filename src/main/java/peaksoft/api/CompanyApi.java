@@ -1,8 +1,10 @@
 package peaksoft.api;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.entity.Company;
 import peaksoft.service.CompanyService;
@@ -14,6 +16,7 @@ import peaksoft.service.CompanyService;
 @Controller
 @RequestMapping("/companies")
 public class CompanyApi {
+
     private final CompanyService companyService;
     @Autowired
     public CompanyApi(CompanyService companyService) {
@@ -36,7 +39,12 @@ public class CompanyApi {
         return "newCompany";
     }
     @PostMapping("/save")
-    public String saveCompany(@ModelAttribute("newCompany") Company company){
+    public String saveCompany(@ModelAttribute("newCompany") @Valid Company company,
+                              BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "newCompany";
+        }
+
         companyService.save(company);
         return "redirect:/companies";
     }
@@ -45,14 +53,18 @@ public class CompanyApi {
         companyService.deleteCompany(id);
         return "redirect:/companies";
     }
-    @GetMapping("/{companyId}/edit")
+    @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id, Model model){
         model.addAttribute("company", companyService.getCompanyById(id));
         return "edit";
     }
     @PatchMapping("/{id}")
     public String updateCompany(@PathVariable("id") Long id,
-                                @ModelAttribute("company") Company company){
+                                @ModelAttribute("company") @Valid Company company,
+                                BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
         companyService.updateCompany(id, company);
         return "redirect:/companies";
     }

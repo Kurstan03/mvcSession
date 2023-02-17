@@ -5,19 +5,27 @@
     <title>Update</title>
 </head>
 <body>
-<form th:method="PUT" th:action="@{update}" th:object="${company}">
-    <div>
+<form th:method="PATCH" th:action="@{/companies/{id}(id=${company.getId()})}" th:object="${company}">
         <label for="name">Name</label>
         <input type="text" th:field="*{name}" id="name">
-    </div>
-    <div>
-        <label for="country">Country</label>
-        <input type="text" th:field="*{country}" id="country">
-    </div>
-    <div>
+<!--    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>-->
+    <br>
+        <label for="email">Email</label>
+        <input type="text" th:field="*{email}" id="email">
+<!--    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>-->
+    <br>
         <label for="image">Image</label>
         <input type="text" th:field="*{image}" id="image">
-    </div>
+<!--    <div style="color: red" th:if="${#fields.hasErrors('images')}" th:errors="*{image}">Image error</div>-->
+    <br>
+<!--        <label for="email">Email</label>-->
+<!--        <input type="text" th:field="*{email}" id="email">-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>-->
+<!--    <br>-->
+<!--        <label for="countEmployees">Count employees</label>-->
+<!--        <input type="text" th:field="*{countEmployees}" id="countEmployees">-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('countEmployees')}" th:errors="*{countEmployees}">Employees error</div>-->
+<!--    <br>-->
     <button type="submit">Update</button>
 </form>
 </body>

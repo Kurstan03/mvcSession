@@ -20,6 +20,8 @@ import java.util.List;
 public class CompanyRepositoryImpl implements CompanyRepository {
     @PersistenceContext
     private EntityManager entityManager;
+
+
     @Override
     public void save(Company company) {
         entityManager.persist(company);
@@ -45,11 +47,12 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Override
     public void updateCompany(Long id, Company updatedCompany) {
-        entityManager.createQuery("update from Company set name = :n, country = :c, image = :i where id = :id"
-        , Company.class)
+        entityManager.createQuery(
+                "update Company set name = :n, image = :i," +
+                        " email = :e where id = :id")
                 .setParameter("n", updatedCompany.getName())
-                .setParameter("c", updatedCompany.getCountry())
-                .setParameter("i", updatedCompany.getId())
+                .setParameter("i", updatedCompany.getImage())
+                .setParameter("e", updatedCompany.getEmail())
                 .setParameter("id", id)
                 .executeUpdate();
     }

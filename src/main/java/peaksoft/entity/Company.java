@@ -1,6 +1,7 @@
 package peaksoft.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,14 +28,21 @@ public class Company {
             generator = "company_id_generator"
     )
     private Long id;
+    @NotEmpty(message = "Name not should be empty!")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters!")
     private String name;
-    private String country;
-    @Column()
+    @Column(length = 100000)
     private String image;
+    @NotEmpty(message = "Email should not be empty!")
+    @Email(message = "Email should be valid!")
+    private String email;
+//    @Column(name = "count_employees")
+//    @Min(value = 0, message = "Employees should be greater than 0!")
+//    private int countEmployees;
 
-    public Company(String name, String country, String image) {
+    public Company(String name, String image, String email) {
         this.name = name;
-        this.country = country;
         this.image = image;
+        this.email = email;
     }
 }

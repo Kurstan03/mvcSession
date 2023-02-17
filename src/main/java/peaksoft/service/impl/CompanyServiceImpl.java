@@ -32,7 +32,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company getCompanyById(Long id) {
-        return null;
+        return companyRepository.getCompanyById(id);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void updateCompany(Long id, Company updatedCompany) {
-
+        companyRepository.updateCompany(id, updatedCompany);
     }
 }
